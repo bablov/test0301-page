@@ -31,35 +31,61 @@
             <form class="login-form" action="/Accounts/Login" method="post">
                 <h3 class="login-head">博彦智能教育平台</h3>
                 <div class="form-group">
-                    <label class="control-label">Key</label>
-                    <input class="form-control" placeholder="请输入Key码" autofocus type="text" data-val="true" data-val-length="The field AccountName must be a string with a maximum length of 20." data-val-length-max="20" id="AccountName" name="AccountName" value="" />
+                    <label class="control-label">APPID</label>
+                    <input class="form-control" placeholder="请输入您的APPID" autofocus type="text" data-val="true" data-val-length="The field AccountName must be a string with a maximum length of 20." data-val-length-max="20" id="appid" name="appid" value="" />
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Script</label>
-                    <input class="form-control" type="password" placeholder="请输入Script码" data-val="true" data-val-length="&#x957F;&#x5EA6;&#x5FC5;&#x987B;&#x5927;&#x4E8E;6&#x5C0F;&#x4E8E;20." data-val-length-max="20" data-val-length-min="6" data-val-required="The Password field is required." id="Password" name="Password" />
+                    <label class="control-label">SecretKey</label>
+                    <input class="form-control" type="password" placeholder="请输入您的SecretKey" data-val="true" data-val-length="&#x957F;&#x5EA6;&#x5FC5;&#x987B;&#x5927;&#x4E8E;6&#x5C0F;&#x4E8E;20." data-val-length-max="20" data-val-length-min="6" data-val-required="The Password field is required." id="secretkey" name="secretkey" />
                 </div>
                 <div class="text-info validation-summary-valid" data-valmsg-summary="true">
                     <ul>
-                        <li>若您没有Key码和Script码，请联系博彦获取</li>
+                        <li>使用本产品前请联系博彦科技获取密钥</li>
                     </ul>
                 </div>
                 <div class="text-danger validation-summary-valid" data-valmsg-summary="true">
                     <ul>
-                        <li style="display:none">请联系BYS获取使用网站初始化相关参数</li>
+                        <li style="" id="message">请联系BYS获取使用网站初始化相关参数</li>
                     </ul>
                 </div>
 
                 <div class="form-group btn-container">
-                    <a href="camera/photo.html" type="submit" class="btn btn-primary btn-block"> 开始初始化设置</a>
-                </div>
-
-                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8PwaErLLpqZLjH8b4R3A9tPG4WqbI2Asyb4iEXKVtKX0Br0sVvcn5aXqURP9HqJUS2OcWfCzhkC0Lo1dn2Smzu0ScduNxGG0QzfUJts0T7059HyAW9PJqGkC7OfHqyon7JBTVbacZHwjlWgfhHGof6I" />
+                    <a href="#" type="submit" class="btn btn-primary btn-block" id="login"> 初始化</a>
+                </div>               
             </form>
 
         </div>
     </section>
     <!--<script src="/js/jquery-2.1.4.min.js"></script>-->
-    
+    <script>
+        $(function () {
+
+            $("#message").css("display", "none");
+
+            if (localStorage.getItem("appid") == "BFF25516-3D0B-487D-B0F4-09734F875042") {
+                window.location.href = "index.html";
+            }
+
+            $("#login").click(function () {
+                var appid = $("#appid").val();
+                var secretkey = $("#secretkey").val();
+                if (appid == undefined || secretkey == undefined || appid == "" || secretkey == "") {
+                    $("#message").html("请输入APPID和SecretKey.");
+                    $("#message").css("display", "list-item");
+                    return false;
+                }
+                else if (appid == "BFF25516-3D0B-487D-B0F4-09734F875042" && secretkey == "A1AD9F08-8390-4063-8C94-AFD9422C73E5") {
+                    localStorage.setItem("appid", "BFF25516-3D0B-487D-B0F4-09734F875042");
+                    window.location.href = "index.html";
+                }
+                else {
+                    $("#message").html("请输入正确的APPID和SecretKey.");
+                    $("#message").css("display", "list-item");
+                    return false;
+                }
+            })
+        })
+    </script>
 </body>
 
 </html>

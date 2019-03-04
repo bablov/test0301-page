@@ -182,6 +182,10 @@
         //    console.log(webapi);
         //   
         //})
+        if (localStorage.getItem("appid") != "BFF25516-3D0B-487D-B0F4-09734F875042") {
+            window.location.href = "login.html";
+        }
+
         GetPersonGroupList();
     })
 
