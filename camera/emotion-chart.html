@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>博彦智能教育平台</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- MetisMenu CSS -->
+    <link href="css/metisMenu/metisMenu.min.css" rel="stylesheet" />
+    <!-- Timeline CSS -->
+    <link href="css/timeline.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="css/sb-admin-2.css" rel="stylesheet" />
+    <!-- Morris Charts CSS -->
+    <link href="morrisjs/morris.css" rel="stylesheet" />
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/camera.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- 引入 ECharts 文件 -->
+    <script src="js/echarts.min.js"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index.html">博彦智能教育平台</a>
+            </div>
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="../index.html"><i class="fa fa-photo fa-fw"></i> 传图识别</a>
+                        </li>
+                        <li>
+                            <a href="../admin/personList.html"><i class="fa fa-dashboard fa-fw"></i> 已分析的Person列表</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">整体分析</h1>
+                </div>
+                <div class="col-lg-12">
+                   
+                    <div class="tip">
+                        <label class="anger">愤怒</label>
+                        <label class="happiness">幸福</label>
+                        <label class="surprise">惊喜</label>
+                        <label class="contempt">轻蔑</label>
+                        <label class="disgust">厌恶</label>
+                        <label class="fear">害怕</label>
+                        <label class="neutral">中性</label>
+                        <label class="sadness">难过</label>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> 整体情绪分析
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div id="piechart" class="piechart2" style="width:600px;height:360px"></div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="js/metisMenu.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="js/highcharts.js"></script>
+</body>
+<script type="text/javascript">
+    var webapi = window.location.protocol + "//" + "api-" + window.location.host;
+
+    function initChart(batchID) {
+        $.ajax({
+            url: webapi + "/persons/face/batch/" + batchID,
+            dataType: 'json',
+            success: function (result) {
+               
+                //var data = [{
+                //    name: "anger",
+                //    y: parseFloat(result.Anger * 10000)
+                //}, {
+                //    name: "happiness",
+                //    y: parseFloat(result.Happiness * 10000)
+                //}, {
+                //    name: "surprise",
+                //    y: parseFloat(result.Surprise * 10000)
+                //}, {
+                //    name: "contempt",
+                //    y: parseFloat(result.Contempt * 10000)
+                //}, {
+                //    name: "disgust",
+                //    y: parseFloat(result.Disgust * 10000)
+                //}, {
+                //    name: "fear",
+                //    y: parseFloat(result.Fear * 10000)
+                //}, {
+                //    name: "neutral",
+                //    y: parseFloat(result.Neutral * 10000)
+                //}, {
+                //    name: "sadness",
+                //    y: parseFloat(result.Sadness * 10000)
+                //}]
+                var data = [{
+                    name: "anger",
+                    y: result.Anger
+                }, {
+                    name: "happiness",
+                    y: result.Happiness 
+                }, {
+                    name: "surprise",
+                    y: result.Surprise 
+                }, {
+                    name: "contempt",
+                    y: result.Contempt 
+                }, {
+                    name: "disgust",
+                    y: result.Disgust
+                }, {
+                    name: "fear",
+                    y: result.Fear 
+                }, {
+                    name: "neutral",
+                    y: result.Neutral 
+                }, {
+                    name: "sadness",
+                    y: result.Sadness 
+                }]
+                $('#piechart').highcharts({
+                    chart: {
+
+                        type: 'pie'
+                    },
+                    colors: ['#c9302c', '#f74074', '#ec971f', '#bdc3c7', '#2e3c84', '#444', '#449d44'],
+                    title: {
+                        text: null
+                    },
+                    plotOptions: {
+                        pie: {
+
+                            dataLabels: {
+                                enabled: false,
+                            }
+                        }
+                    },
+                    credits: {
+                        enabled: false,
+                    },
+                    tooltip: {
+                        enabled: false,
+                    },
+                    series: [{
+                        data: data
+                    }]
+                });
+            }
+        })
+    }
+
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
+    $(function () {
+        var batchID = getQueryString('batchID');
+        initChart(batchID);
+    })
+
+
+</script>
+
+</html>

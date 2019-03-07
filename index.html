@@ -162,6 +162,8 @@
 
                             geThumbnai(facelist[i].personKey, facelist[i].faceKey, PersonGroup);
                         }
+
+                        $("#result").append('<a target="_blank" href="camera/emotion-chart.html?batchID=' + data.batchID + '" class="btn btn-outline btn-primary">View Report</a>')
                     }
 
                 },
@@ -182,9 +184,9 @@
         //    console.log(webapi);
         //   
         //})
-        if (localStorage.getItem("appid") != "BFF25516-3D0B-487D-B0F4-09734F875042") {
-            window.location.href = "login.html";
-        }
+        //if (localStorage.getItem("appid") != "BFF25516-3D0B-487D-B0F4-09734F875042") {
+        //    window.location.href = "login.html";
+        //}
 
         GetPersonGroupList();
     })
